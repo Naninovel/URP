@@ -1,0 +1,15 @@
+@back Snow time:0
+@spawn Snow params:,0
+@char y wait:false
+@char m
+m.Sport: Test.
+@despawn Snow params:0
+@hidePrinter wait:false
+@hideChars
+@spawn SunShafts params:,0
+@back Beach.DropFade time:3
+@char n
+@spawn Blur params:,1,3 wait:false
+@camera zoom:0.5 offset:,1 time:3
+n: End test.
+@stop
