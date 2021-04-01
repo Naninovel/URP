@@ -6,7 +6,8 @@
 .gradle*
 /Assets/AssetStoreTools*
 /Assets/StreamingAssets*
-/Assets/ThirdParty/Naninovel*
+/Assets/ThirdParty/Naninovel/
+/Assets/ThirdParty/Naninovel.meta
 /Assets/NaninovelData/Saves*
 
 # Allow third-party dlls

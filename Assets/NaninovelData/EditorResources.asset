@@ -211,3 +211,8 @@ MonoBehaviour:
     - name: m
       pathPrefix: Characters
       guid: 00106e3868211064dad0725371f5b0d7
+  - Id: Characters/37fb701c-d1db-4625-8098-c141824003d0
+    Resources:
+    - name: s
+      pathPrefix: Characters
+      guid: 9e3aed6da79de9b4d9901071d5fdc3d9
