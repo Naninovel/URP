@@ -196,10 +196,10 @@ MonoBehaviour:
       RenderTexture: {fileID: 0}
       CorrectRenderAspect: 1
       BakedLookDirection: 1
-      DisplayName: 
-      UseCharacterColor: 0
-      NameColor: {r: 1, g: 1, b: 1, a: 1}
-      MessageColor: {r: 1, g: 1, b: 1, a: 1}
+      DisplayName: Spine Boy
+      UseCharacterColor: 1
+      NameColor: {r: 0.6226415, g: 0.14978638, b: 0.14978638, a: 1}
+      MessageColor: {r: 1, g: 0.9103774, b: 0.9103774, a: 1}
       HighlightWhenSpeaking: 0
       HighlightCharacterCount: 0
       SpeakingPose: 
