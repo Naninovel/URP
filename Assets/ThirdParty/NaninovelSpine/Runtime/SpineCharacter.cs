@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Naninovel.Commands;
 using Naninovel.FX;
@@ -17,6 +16,10 @@ namespace Naninovel
     [ActorResources(typeof(SpineController), false)]
     public class SpineCharacter : MonoBehaviourActor<CharacterMetadata>, ICharacterActor, LipSync.IReceiver, Blur.IBlurable
     {
+        /// <summary>
+        /// Controller component of the instantiated spine prefab associated with the actor.
+        /// </summary>
+        public virtual SpineController Controller { get; private set; }
         public override string Appearance { get => appearance; set => SetAppearance(value); }
         public override bool Visible { get => visible; set => SetVisibility(value); }
         public CharacterLookDirection LookDirection
@@ -26,11 +29,9 @@ namespace Naninovel
         }
 
         protected virtual TransitionalRenderer TransitionalRenderer { get; private set; }
-        protected virtual SpineController Controller { get; private set; }
         protected virtual SpineDrawer Drawer { get; private set; }
         protected virtual CharacterLipSyncer LipSyncer { get; private set; }
 
-        private readonly Dictionary<object, HashSet<string>> heldAppearances = new Dictionary<object, HashSet<string>>();
         private LocalizableResourceLoader<GameObject> prefabLoader;
         private string appearance;
         private bool visible;
@@ -44,7 +45,7 @@ namespace Naninovel
 
             prefabLoader = InitializeLoader(ActorMetadata);
             Controller = await InitializeControllerAsync(prefabLoader, Id, Transform);
-            TransitionalRenderer = TransitionalRenderer.CreateFor(ActorMetadata, GameObject);
+            TransitionalRenderer = TransitionalRenderer.CreateFor(ActorMetadata, GameObject, true);
             Drawer = new SpineDrawer(Controller);
             LipSyncer = new CharacterLipSyncer(Id, Controller.ChangeIsSpeaking);
 
@@ -95,29 +96,6 @@ namespace Naninovel
         }
 
         public void AllowLipSync (bool active) => LipSyncer.SyncAllowed = active;
-
-        public override async UniTask HoldResourcesAsync (string appearance, object holder)
-        {
-            if (!heldAppearances.ContainsKey(holder))
-            {
-                await prefabLoader.LoadAndHoldAsync(Id, holder);
-                heldAppearances.Add(holder, new HashSet<string>());
-            }
-
-            heldAppearances[holder].Add(appearance);
-        }
-
-        public override void ReleaseResources (string appearance, object holder)
-        {
-            if (!heldAppearances.ContainsKey(holder)) return;
-
-            heldAppearances[holder].Remove(appearance);
-            if (heldAppearances.Count == 0)
-            {
-                heldAppearances.Remove(holder);
-                prefabLoader?.Release(Id, holder);
-            }
-        }
 
         protected virtual void SetAppearance (string appearance)
         {
